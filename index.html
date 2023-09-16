@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/static/aframe.js"></script>
+  <script src="/static/bundle.js"></script>
+  <script src="/static/aincraft.js"></script>
+</head>
+
+<body>
+  <a-scene id="root">
+    <a-assets id="assets">
+      <img id="groundTexture" src="/static/floor.jpg" alt="">
+      <img id="skyTexture" src="/static/sky.jpg" alt="">
+      <a-mixin id="voxel" geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5" material="shader: standard">
+      </a-mixin>
+    </a-assets>
+    <a-cylinder id="voxel" src="#groundTexture" radius="32" height="0.1"></a-cylinder>
+    <a-sky id="background" src="#skyTexture" radius="30" theta-length="90"></a-sky>
+    <a-camera id="camera">
+      <a-cursor id="cursor" intersection-spawn="event: click; offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5; mixin: voxel">
+      </a-cursor>
+    </a-camera>
+  </a-scene>
+</body>
+
+</html>

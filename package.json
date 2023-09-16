@@ -1,0 +1,26 @@
+{
+  "name": "ndnts-aio",
+  "version": "1.0.0",
+  "description": "All-in-one bundle of NDNts for development only",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ndn/autoconfig": "https://ndnts-nightly.ndn.today/autoconfig.tgz",
+    "@ndn/endpoint": "https://ndnts-nightly.ndn.today/endpoint.tgz",
+    "@ndn/naming-convention2": "https://ndnts-nightly.ndn.today/naming-convention2.tgz",
+    "@ndn/nfdmgmt": "https://ndnts-nightly.ndn.today/nfdmgmt.tgz",
+    "@ndn/packet": "https://ndnts-nightly.ndn.today/packet.tgz",
+    "@ndn/sync": "https://ndnts-nightly.ndn.today/sync.tgz",
+    "@ndn/util": "https://ndnts-nightly.ndn.today/util.tgz",
+    "@ndn/ws-transport": "https://ndnts-nightly.ndn.today/ws-transport.tgz"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
