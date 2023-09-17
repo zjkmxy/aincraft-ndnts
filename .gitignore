@@ -131,3 +131,7 @@ dist
 
 # Bundle
 bundle.js
+
+# Firebase
+.firebase/
+.firebaserc

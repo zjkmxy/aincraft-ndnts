@@ -14,6 +14,9 @@ dependencies:
   '@ndn/fw':
     specifier: https://ndnts-nightly.ndn.today/fw.tgz
     version: '@ndnts-nightly.ndn.today/fw.tgz'
+  '@ndn/l3face':
+    specifier: https://ndnts-nightly.ndn.today/l3face.tgz
+    version: '@ndnts-nightly.ndn.today/l3face.tgz'
   '@ndn/naming-convention2':
     specifier: https://ndnts-nightly.ndn.today/naming-convention2.tgz
     version: '@ndnts-nightly.ndn.today/naming-convention2.tgz'
@@ -32,6 +35,9 @@ dependencies:
   '@ndn/ws-transport':
     specifier: https://ndnts-nightly.ndn.today/ws-transport.tgz
     version: '@ndnts-nightly.ndn.today/ws-transport.tgz'
+  event-iterator:
+    specifier: ^2.0.0
+    version: 2.0.0
   peerjs:
     specifier: ^1.5.0
     version: 1.5.0

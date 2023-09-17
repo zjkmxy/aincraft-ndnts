@@ -6,8 +6,9 @@ import { enableNfdPrefixReg } from "@ndn/nfdmgmt"
 import { Name, Data, digestSigning, type Interest } from "@ndn/packet";
 import { SequenceNum } from "@ndn/naming-convention2";
 import { fromUtf8, toUtf8 } from "@ndn/util";
+import { PeerJsListener } from "./peerjs-transport";
 
-export var uplink: FwFace;
+export var listener: PeerJsListener;
 export var endpoint: Endpoint;
 export var syncInst: SvSync;
 export const nodeId = '/node-' + Array.from(crypto.getRandomValues(new Uint8Array(4)))
@@ -18,31 +19,31 @@ export var pktStorage: { [name: string]: Data } = {};
 export const syncPrefix = '/example/testJsonPatch'
 export var applyPatch: (patch: string) => void;
 
-export async function connect(uri: string) {
-  if (uri === undefined || uri === null) {
-    uri = "ws://localhost:9696/"
+export async function connect() {
+  const opts: PeerJsListener.Options = {
+    host: "localhost",
+    port: 8000,
+    path: "/aincraft",
+    key: "peerjs",
   }
-  // Create a WebSocket face.
-  // Unless otherwise specified, the face is added to the default Forwarder instance.
-  // You may set an alternate Forwarder instance in the first argument.
+  // Create a PeerJs listener.
   //
   // A route for "/" prefix is added automatically.
   // You may customize the route prefixes via addRoutes property in the first argument.
-  uplink = await WsTransport.createFace({}, uri);
-  uplink.attributes.local = true;  // Force ndnts to register the prefix correctly using localhost
-  enableNfdPrefixReg(uplink);
+  listener = await PeerJsListener.listen(opts);
+  await listener.connectToKnownPeers();
 
   // Construct an Endpoint on the default Forwarder instance.
   endpoint = new Endpoint();
 
   endpoint.produce(nodeId + syncPrefix, dataPktServer, { describe: 'dataHandler' });
-  uplink.addAnnouncement(nodeId + syncPrefix);
+  // uplink.addAnnouncement(nodeId + syncPrefix);
 
   return endpoint;
 }
 
 export function shutdown() {
-  uplink.close();
+  listener.closeAll();
 }
 
 async function dataPktServer(interest: Interest, producer: Producer) {
@@ -77,7 +78,7 @@ export function createSync() {
   });
   syncInst.addEventListener("update", handleSyncUpdate);
   syncNode = syncInst.add(nodeId);
-  uplink.addAnnouncement(syncPrefix);
+  // uplink.addAnnouncement(syncPrefix);
   produce('{"op":"nop","@version":0,"@name":"/root"}', true);  // Skip sequence number 0
 }
 

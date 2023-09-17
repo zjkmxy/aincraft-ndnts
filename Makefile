@@ -4,3 +4,6 @@ build:
 
 run:
 	python3 -m http.server 9000
+
+peerjs:
+	peerjs --port 8000 --key peerjs --path /aincraft --allow_discovery true
