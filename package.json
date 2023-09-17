@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "All-in-one bundle of NDNts for development only",
   "scripts": {
-    "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config webpack.config.js && cp dist/bundle.js public/static/bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "peer-server": "peerjs --port 8000 --key peerjs --path /aincraft --allow_discovery true",
+    "http-server": "http-server -a localhost -p 9000"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,8 @@
     "@ndn/util": "https://ndnts-nightly.ndn.today/util.tgz",
     "@ndn/ws-transport": "https://ndnts-nightly.ndn.today/ws-transport.tgz",
     "event-iterator": "^2.0.0",
+    "http-server": "^14.1.1",
+    "peer": "^1.0.1",
     "peerjs": "^1.5.0"
   },
   "devDependencies": {
