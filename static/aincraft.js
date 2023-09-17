@@ -63,7 +63,7 @@ AFRAME.registerComponent('intersection-spawn', {
         '@name': `/root/${boxId}`,
         '@version': ver,
       }
-      ndnts.produce(JSON.stringify(patchJson))
+      aincraft_ts.produce(JSON.stringify(patchJson))
       let patchJsonAdd = {
         'op': 'add',
         'path': `/@children/${boxId}`,
@@ -71,7 +71,7 @@ AFRAME.registerComponent('intersection-spawn', {
         '@name': `/root`,
         '@version': ver,
       }
-      ndnts.produce(JSON.stringify(patchJsonAdd))
+      aincraft_ts.produce(JSON.stringify(patchJsonAdd))
     });
   }
 });
@@ -106,7 +106,7 @@ function applyPatch(patch) {
 };
 
 (async () => {
-  await ndnts.connect();
-  ndnts.setApplyPatch(patch => applyPatch(patch));
-  ndnts.createSync();
+  await aincraft_ts.connect();
+  aincraft_ts.setApplyPatch(patch => applyPatch(patch));
+  aincraft_ts.createSync();
 })();

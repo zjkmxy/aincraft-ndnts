@@ -1,23 +1,24 @@
+import { type FwFace } from "@ndn/fw";
 import { WsTransport } from "@ndn/ws-transport";
-import { Endpoint } from "@ndn/endpoint";
-import { SvSync } from "@ndn/sync"
+import { Endpoint, type Producer } from "@ndn/endpoint";
+import { SvSync, type SyncNode, type SyncUpdate } from "@ndn/sync"
 import { enableNfdPrefixReg } from "@ndn/nfdmgmt"
-import { Name, Data, digestSigning } from "@ndn/packet";
+import { Name, Data, digestSigning, type Interest } from "@ndn/packet";
 import { SequenceNum } from "@ndn/naming-convention2";
 import { fromUtf8, toUtf8 } from "@ndn/util";
 
-export var uplink;
-export var endpoint;
-export var syncInst;
+export var uplink: FwFace;
+export var endpoint: Endpoint;
+export var syncInst: SvSync;
 export const nodeId = '/node-' + Array.from(crypto.getRandomValues(new Uint8Array(4)))
   .map(v => v.toString(16).padStart(2, '0'))
   .join('');
-var syncNode;
-export var pktStorage = {};
+var syncNode: SyncNode;
+export var pktStorage: { [name: string]: Data } = {};
 export const syncPrefix = '/example/testJsonPatch'
-export var applyPatch;
+export var applyPatch: (patch: string) => void;
 
-export async function connect(uri) {
+export async function connect(uri: string) {
   if (uri === undefined || uri === null) {
     uri = "ws://localhost:9696/"
   }
@@ -44,12 +45,12 @@ export function shutdown() {
   uplink.close();
 }
 
-async function dataPktServer(interest, producer) {
+async function dataPktServer(interest: Interest, producer: Producer) {
   const name = interest.name.toString();
   return pktStorage[name];
 }
 
-async function handleSyncUpdate(update) {
+async function handleSyncUpdate(update: SyncUpdate<Name>) {
   console.log(update.id, update.loSeqNum, update.hiSeqNum);
   let loSeqNum = update.loSeqNum;
   if (loSeqNum == 1) {
@@ -80,7 +81,7 @@ export function createSync() {
   produce('{"op":"nop","@version":0,"@name":"/root"}', true);  // Skip sequence number 0
 }
 
-export function produce(content, skipZeroFlag = false) {
+export function produce(content: string, skipZeroFlag = false) {
   let seqNum = syncNode.seqNum + 1;
   if (skipZeroFlag) {
     seqNum = 0;
@@ -96,6 +97,6 @@ export function produce(content, skipZeroFlag = false) {
   }
 }
 
-export function setApplyPatch(callback) {
+export function setApplyPatch(callback: (patch: string) => void) {
   applyPatch = callback;
 }
