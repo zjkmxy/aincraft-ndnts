@@ -7,23 +7,61 @@
   <script src="/static/aframe.js"></script>
   <script src="/static/bundle.js"></script>
   <script src="/static/aincraft.js"></script>
+  <style>
+    /* Style for the container holding the columns */
+    .container {
+      display: flex;
+      /* Use flexbox for layout */
+      height: 100%;
+      min-height: 600px;
+    }
+
+    /* Style for the left column */
+    .column {
+      flex: 1;
+      /* This makes both columns equal width */
+      padding: 20px;
+      /* Add spacing between content and border */
+      border: 1px solid #ccc;
+      /* Add a border for separation */
+      height: 100%;
+      min-height: 600px;
+    }
+
+    a-scene {
+      height: 600px;
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
-  <a-scene id="root">
-    <a-assets id="assets">
-      <img id="groundTexture" src="/static/floor.jpg" alt="">
-      <img id="skyTexture" src="/static/sky.jpg" alt="">
-      <a-mixin id="voxel" geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5" material="shader: standard">
-      </a-mixin>
-    </a-assets>
-    <a-cylinder id="voxel" src="#groundTexture" radius="32" height="0.1"></a-cylinder>
-    <a-sky id="background" src="#skyTexture" radius="30" theta-length="90"></a-sky>
-    <a-camera id="camera">
-      <a-cursor id="cursor" intersection-spawn="event: click; offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5; mixin: voxel">
-      </a-cursor>
-    </a-camera>
-  </a-scene>
+  <div class="container">
+    <div class="column">
+      <canvas id="cert-qrcode"></canvas>
+      <form>
+        <input type="file" id="qr-input" name="qr-input" accept="image/*"/>
+      </form>
+    </div>
+    <div class="column">
+      <a-scene id="root" embedded>
+        <a-assets id="assets">
+          <img id="groundTexture" src="/static/floor.jpg" alt="">
+          <img id="skyTexture" src="/static/sky.jpg" alt="">
+          <a-mixin id="voxel" geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
+            material="shader: standard">
+          </a-mixin>
+        </a-assets>
+        <a-cylinder id="voxel" src="#groundTexture" radius="32" height="0.1"></a-cylinder>
+        <a-sky id="background" src="#skyTexture" radius="30" theta-length="90"></a-sky>
+        <a-camera id="camera">
+          <a-cursor id="cursor"
+            intersection-spawn="event: click; offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5; mixin: voxel">
+          </a-cursor>
+        </a-camera>
+      </a-scene>
+    </div>
+  </div>
 </body>
 
 </html>

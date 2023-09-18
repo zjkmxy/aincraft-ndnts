@@ -63,15 +63,16 @@ AFRAME.registerComponent('intersection-spawn', {
         '@name': `/root/${boxId}`,
         '@version': ver,
       }
-      aincraft_ts.produce(JSON.stringify(patchJson))
-      let patchJsonAdd = {
-        'op': 'add',
-        'path': `/@children/${boxId}`,
-        'value': -1,
-        '@name': `/root`,
-        '@version': ver,
-      }
-      aincraft_ts.produce(JSON.stringify(patchJsonAdd))
+      aincraft_ts.produce(JSON.stringify(patchJson)).then(() => {
+        let patchJsonAdd = {
+          'op': 'add',
+          'path': `/@children/${boxId}`,
+          'value': -1,
+          '@name': `/root`,
+          '@version': ver,
+        }
+        aincraft_ts.produce(JSON.stringify(patchJsonAdd))
+      })
     });
   }
 });
@@ -106,7 +107,23 @@ function applyPatch(patch) {
 };
 
 (async () => {
+  await aincraft_ts.selfSignCert();
   await aincraft_ts.connect();
   aincraft_ts.setApplyPatch(patch => applyPatch(patch));
   aincraft_ts.createSync();
 })();
+
+window.addEventListener("DOMContentLoaded", (e) => {
+  const qrInput = document.getElementById("qr-input");
+  qrInput.addEventListener("change", () => {
+    for (const file of qrInput.files) {
+      aincraft_ts.scanQrCode(file);
+    }
+  });
+  window.addEventListener('paste', e => {
+    qrInput.files = e.clipboardData.files;
+    for (const file of qrInput.files) {
+      aincraft_ts.scanQrCode(file);
+    }
+  });
+});
