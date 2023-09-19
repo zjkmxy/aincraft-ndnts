@@ -131,6 +131,7 @@ dist
 
 # Bundle
 bundle.js
+*.bundle.js
 
 # Firebase
 .firebase/
