@@ -4,7 +4,7 @@
 
 You need [pnpm](https://pnpm.io/installation) to build this project.
 
-- Install dependencies: `pnpm install --dev`
+- Install dependencies: `pnpm install`
 - Build the project: `pnpm build`
 - Start a PeerJS server on localhost: `pnpm run peer-server`
 - Start an HTTP server: `pnpm run http-server`
