@@ -132,7 +132,9 @@ dist
 # Bundle
 bundle.js
 *.bundle.js
+*.module.wasm
 
 # Firebase
 .firebase/
 .firebaserc
+temp/
