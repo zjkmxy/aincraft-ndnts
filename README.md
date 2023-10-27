@@ -1,3 +1,5 @@
+Migrate to https://github.com/zjkmxy/ndn-workspace-solid
+
 # Web VR using NDN-SVS over PeerJS
 
 ## Usage
